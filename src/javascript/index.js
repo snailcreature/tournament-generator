@@ -1,6 +1,7 @@
 import '../css/index.css';
 
 const { Set } = require('./set');
+const { getRounds, random } = require('./helpers');
 
 const entrants = [
   "Sam",
@@ -26,10 +27,6 @@ function generateMatchings() {
     matchings = matchings.trim(match => match[0] !== match[1]);
   }
 }
-
-function getRounds (x) { return (((x**2-x)/2)+x)/(Math.floor(x/2)+x%2); }
-
-function random (min=0, max=50) { return Math.floor(Math.random() * (max - min) + min); }
 
 function generateRounds() {
   const roundCount = getRounds(entrants.length);
