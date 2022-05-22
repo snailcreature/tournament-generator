@@ -1,8 +1,8 @@
 const { Set } = require('./set');
-const { getRounds } = require('./helpers');
+const { getRounds, random } = require('./helpers');
 
 class Tournament {
-  constructor(id, entrants) {
+  constructor(id, entrants, shuffle=true) {
     this.id = id;
 
     this.entrants = entrants.sort();
@@ -12,6 +12,7 @@ class Tournament {
     this.roundCount = getRounds(entrants.length);
     this.rounds = {};
     this.createRounds();
+    if (shuffle) this.shuffleRounds();
   }
 
   createMatchSet() {
@@ -43,6 +44,17 @@ class Tournament {
       start += 2;
       if (start > this.roundCount) start -= this.roundCount;
     });
+  }
+
+  shuffleRounds(shifts=10) {
+    for (let i = 0; i < shifts; i++) {
+      const x = random(1, this.roundCount);
+      const y = random(1, this.roundCount);
+
+      const hold = this.rounds[x];
+      this.rounds[x] = this.rounds[y];
+      this.rounds[y] = hold;
+    }
   }
 
   getRounds() {
