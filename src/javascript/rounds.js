@@ -37,12 +37,21 @@ class Tournament {
         let index = start + i;
         if (index > this.roundCount) index -= this.roundCount;
 
-        this.rounds[index].addMatch(new Match(leading[i].join('-'), leading[i][0], leading[i][1]));
+        if (leading[i][0] !== leading[i][1]) this.rounds[index].addMatch(new Match(leading[i].join('-'), leading[i][0], leading[i][1]));
       }
 
       start += 2;
       if (start > this.roundCount) start -= this.roundCount;
     });
+  }
+
+  getRounds() {
+    return this.rounds;
+  }
+
+  getRound(i) {
+    if (i > 0 && i <= this.roundCount) return this.rounds[i];
+    return null;
   }
 }
 
