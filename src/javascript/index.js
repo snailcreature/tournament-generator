@@ -11,10 +11,9 @@ const entrants = [
   "Tom",
 ];
 
-const matchings = new Set([]);
+let matchings = new Set([]);
 
 const rounds = {};
-const matched = new Set([])
 
 function generateMatchings() {
   entrants.forEach((ent1) => {
@@ -23,25 +22,45 @@ function generateMatchings() {
       matchings.add(match);
     });
   });
+  if (entrants.length % 2 === 0) {
+    matchings = matchings.trim(match => match[0] !== match[1]);
+  }
 }
 
 function getRounds (x) { return (((x**2-x)/2)+x)/(Math.floor(x/2)+x%2); }
 
+function random (min=0, max=50) { return Math.floor(Math.random() * (max - min) + min); }
+
 function generateRounds() {
   const roundCount = getRounds(entrants.length);
-  for (let i = 0; i < entrants.length; i++) {
+  let unmatched = new Set(matchings.get()).toArray();
+  for (let i = 0; i < roundCount; i++) {
     const round = [];
     const taken = [];
+    
     entrants.forEach((ent) => {
       if (!taken.includes(ent)) {
-        
+        console.log(taken)
+        const possibleMatches = unmatched.filter(pair => pair.includes(ent))
+        .filter(pair => pair.every(person => !(taken.includes(person))));
+        console.log({ possibleMatches });
+        const select = possibleMatches[random(0, possibleMatches.length-1)];
+        if (select === undefined) { console.log({ ent }) }
+        round.push(select);
+        taken.push(select[0], select[1]);
+        unmatched = unmatched.filter(pair => pair !== select);
       }
     })
+    console.log({ round })
+    rounds[i] = round;
   }
 }
 
 generateMatchings();
 console.log({ matchings });
+
+generateRounds();
+console.log({ rounds })
 
 console.log(getRounds(5));
 console.log(getRounds(2));
