@@ -1,0 +1,33 @@
+{
+  "name": "webpack-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "jsdoc -r -c jsdocconf.json && npx webpack",
+    "serve": "npx http-server dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snailcreature/webpack-boilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snailcreature/webpack-boilerplate/issues"
+  },
+  "homepage": "https://github.com/snailcreature/webpack-boilerplate#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "jsdoc": "^3.6.10"
+  }
+}
