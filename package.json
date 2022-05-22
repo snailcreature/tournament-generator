@@ -1,5 +1,5 @@
 {
-  "name": "webpack-boilerplate",
+  "name": "tournament-generator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snailcreature/webpack-boilerplate.git"
+    "url": "git+https://github.com/snailcreature/tournament-generator.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/snailcreature/webpack-boilerplate/issues"
+    "url": "https://github.com/snailcreature/tournament-generator/issues"
   },
-  "homepage": "https://github.com/snailcreature/webpack-boilerplate#readme",
+  "homepage": "https://github.com/snailcreature/tournament-generator#readme",
   "devDependencies": {
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.0",
-    "jsdoc": "^3.6.10"
+    "jsdoc": "^3.6.10",
+    "set": "^1.1.1"
   }
 }
