@@ -1,8 +1,9 @@
 const { Set } = require('./set');
-const { getRounds, random } = require('./helpers');
+const { getRounds, random, BasicObject } = require('./helpers');
 
-class Tournament {
+class Tournament extends BasicObject {
   constructor(id, entrants, shuffle=true) {
+    super();
     this.id = id;
 
     this.entrants = entrants.sort();
@@ -38,7 +39,9 @@ class Tournament {
         let index = start + i;
         if (index > this.roundCount) index -= this.roundCount;
 
-        if (leading[i][0] !== leading[i][1]) this.rounds[index].addMatch(new Match(leading[i].join('-'), leading[i][0], leading[i][1]));
+        if (leading[i][0] !== leading[i][1]) this.rounds[index].addMatch(
+          new Match(leading[i].join('-'), leading[i][0], leading[i][1])
+          );
       }
 
       start += 2;
@@ -67,8 +70,9 @@ class Tournament {
   }
 }
 
-class Round {
+class Round extends BasicObject {
   constructor(id) {
+    super();
     this.id = id;
     this.matches = [];
   }
@@ -88,8 +92,9 @@ class Round {
   }
 }
 
-class Match {
+class Match extends BasicObject {
   constructor(id, entrantA, entrantB) {
+    super();
     this.id = id;
 
     this.entA = entrantA;
@@ -99,6 +104,17 @@ class Match {
 
     this.winner = null;
     this.draw = false;
+
+    this.on('markwin', (e) => { 
+      if (e.detail.matchId === this.id) {
+        this.markWinner(e.detail.entrant);
+      }
+    });
+    this.on('toggledraw', (e) => {
+      if (e.detail.matchId === this.id) {
+        this.toggleDraw();
+      }
+    });
   }
 
   markWinner(entrant) {
