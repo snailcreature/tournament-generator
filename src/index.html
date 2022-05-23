@@ -6,6 +6,14 @@
   </head>
   <body>
     <h1>Tournament Generator</h1>
-    <div id="rounds"></div>
+    <section id="config">
+      <h2>Tournament Config</h2>
+      <textarea name="Entrant List" id="entrant-list" cols="30" rows="10" placeholder="Enter list of entrants, each on a new line..."></textarea>
+      <button name="Create Tournament" id="create">Create Tournament</button>
+    </section>
+    <section id="tournament" hidden>
+      <button name="Edit Tournament" id="edit">Edit Tournament</button>
+      <div id="rounds"></div>
+    </section>
   </body>
 </html>

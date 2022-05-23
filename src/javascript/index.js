@@ -2,25 +2,39 @@ import '../css/index.css';
 
 const { Tournament } = require('./rounds');
 
+const configSection = document.querySelector('#config');
+const tournamentSection = document.querySelector('#tournament');
 const rounds = document.querySelector('#rounds');
+const entrantList = document.querySelector('#entrant-list');
+const create = document.querySelector('#create');
+const edit = document.querySelector('#edit');
 
-const entrants = [
-  "Sam",
-  "Hyrum",
-  "Danielle",
-  "Dan",
-  "Dylan",
-  "Tom",
-];
+let tournament = undefined;
 
-let tourn = new Tournament("tourney", entrants);
+create.addEventListener('click', () => {
+  const entrants = entrantList.value.split('\n');
+  if (entrants.length >= 0 && entrants.every(ent => ent !== '')) {
+    if (tournament === undefined || tournament.entrants.length !== entrants.length) {
+      tournament = new Tournament("tournament", entrants);
+    } else if (!entrants.every(ent => tournament.entrants.includes(ent))) {
+      tournament = new Tournament("tournament", entrants);
+    }
+    const roundList = tournament.getRounds();
+    rounds.innerHTML = '';
+    for (let i = 1; i <= tournament.roundCount; i++) {
+      rounds.innerHTML += `<h2>Round ${i}</h2>`;
+      rounds.innerHTML += `<ol>`;
+      roundList[i].getMatches().forEach(match => {
+        rounds.innerHTML += `<li>${match.entA} vs ${match.entB}</li>`;
+      });
+      rounds.innerHTML += `</ol>`
+    }
+    tournamentSection.hidden = false;
+    configSection.hidden = true;
+  }
+});
 
-const roundList = tourn.getRounds();
-for (let i = 1; i <= tourn.roundCount; i++) {
-  rounds.innerHTML += `<h2>Round ${i}</h2>`;
-  rounds.innerHTML += `<ol>`;
-  roundList[i].getMatches().forEach(match => {
-    rounds.innerHTML += `<li>${match.entA} vs ${match.entB}</li>`;
-  });
-  rounds.innerHTML += `</ol>`
-}
+edit.addEventListener('click', () => {
+  configSection.hidden = false;
+  tournamentSection.hidden = true;
+});
