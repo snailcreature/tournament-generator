@@ -6,7 +6,8 @@
   "scripts": {
     "build": "jsdoc -r -c jsdocconf.json && npx webpack",
     "serve": "npx http-server dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "npx http-server docs"
   },
   "repository": {
     "type": "git",

@@ -1,3 +1,9 @@
+/**
+ * Main runtime process
+ * @file
+ * @requires ./rounds
+ */
+
 import '../css/index.css';
 
 const { Tournament } = require('./rounds');

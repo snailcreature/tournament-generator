@@ -1,7 +1,23 @@
+/**
+ * @file - Contains handlers for Tournaments, Rounds, and Matches
+ * @requires ./set
+ * @requires ./helpers
+ */
 const { Set } = require('./set');
 const { getRounds, random, BasicObject } = require('./helpers');
 
+/**
+ * Tournament object
+ * @class
+ * @extends {BasicObject}
+ */
 class Tournament extends BasicObject {
+  /**
+   * Creates a Tournament object that manages the rounds and matches
+   * @param {String} id - Unique identifier
+   * @param {String[]} entrants - List of entrants
+   * @param {Boolean} shuffle - Should the round order be shuffled
+   */
   constructor(id, entrants, shuffle=true) {
     super();
     this.id = id;
@@ -16,6 +32,10 @@ class Tournament extends BasicObject {
     if (shuffle) this.shuffleRounds();
   }
 
+  /**
+   * Creates a set containing all the possible matches
+   * @returns {Set}
+   */
   createMatchSet() {
     const matchings = new Set([]);
     this.entrants.forEach((ent1) => {
@@ -27,6 +47,9 @@ class Tournament extends BasicObject {
     return matchings;
   }
 
+  /**
+   * Creates the rounds using each of the matches
+   */
   createRounds() {
     for (let i = 0; i < this.roundCount; i++) {
       this.rounds[i+1] = new Round(i);
@@ -49,6 +72,10 @@ class Tournament extends BasicObject {
     });
   }
 
+  /**
+   * Shuffle the round order.
+   * @param {Number} shifts - How many times should things be switched around
+   */
   shuffleRounds(shifts=10) {
     for (let i = 0; i < shifts; i++) {
       const x = random(1, this.roundCount);
@@ -60,31 +87,62 @@ class Tournament extends BasicObject {
     }
   }
 
+  /**
+   * Returns the list of rounds.
+   * @returns {Round[]}
+   */
   getRounds() {
     return this.rounds;
   }
 
+  /**
+   * Returns the given round, if it exists
+   * @param {Number} i - Round number
+   * @returns {Round|null}
+   */
   getRound(i) {
     if (i > 0 && i <= this.roundCount) return this.rounds[i];
     return null;
   }
 }
 
+/**
+ * A round in the tournament
+ * @class
+ * @extends BasicObject
+ */
 class Round extends BasicObject {
+  /**
+   * Create a new round for the tournament
+   * @param {String} id - Unique identifier
+   */
   constructor(id) {
     super();
     this.id = id;
     this.matches = [];
   }
 
+  /**
+   * Adds a match to this round.
+   * @param {Match} match - Match to add
+   */
   addMatch(match) {
     this.matches.push(match);
   }
 
+  /**
+   * Returns a list of the matches in this round.
+   * @returns {Match[]}
+   */
   getMatches() {
     return this.matches;
   }
 
+  /**
+   * Returns the requested match, if it exists
+   * @param {String} id - Match id
+   * @returns {Match|null}
+   */
   getMatch(id) {
     const filter = this.matches.filter(match => match.id === id);
     if (filter.length >= 1) return filter[0];
@@ -92,7 +150,18 @@ class Round extends BasicObject {
   }
 }
 
+/**
+ * A match in the tournament between two entrants
+ * @class
+ * @extends BasicObject
+ */
 class Match extends BasicObject {
+  /**
+   * Creates a new match within the tournament
+   * @param {String} id - Unique identifier
+   * @param {String} entrantA - First entrant
+   * @param {String} entrantB - Second entrant
+   */
   constructor(id, entrantA, entrantB) {
     super();
     this.id = id;
@@ -117,10 +186,17 @@ class Match extends BasicObject {
     });
   }
 
+  /**
+   * Marks this match as won
+   * @param {String} entrant - Winner of this match
+   */
   markWinner(entrant) {
     this.winner = entrant;
   }
 
+  /**
+   * Toggles whether the round was a draw
+   */
   toggleDraw() {
     this.draw = !this.draw;
   }
