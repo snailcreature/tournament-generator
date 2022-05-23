@@ -20,9 +20,9 @@ create.addEventListener('click', () => {
       tournament = new Tournament("tournament", entrants);
     }
     const roundList = tournament.getRounds();
-    rounds.innerHTML = '';
+    rounds.innerHTML = '<h2>Tournament</h2>';
     for (let i = 1; i <= tournament.roundCount; i++) {
-      rounds.innerHTML += `<h2>Round ${i}</h2>`;
+      rounds.innerHTML += `<h3>Round ${i}</h3>`;
       rounds.innerHTML += `<ol>`;
       roundList[i].getMatches().forEach(match => {
         rounds.innerHTML += `<li>${match.entA} vs ${match.entB}</li>`;
