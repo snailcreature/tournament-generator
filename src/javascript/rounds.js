@@ -4,30 +4,34 @@
  * @requires ./helpers
  */
 const { Set } = require('./set');
-const { getRounds, random, BasicObject } = require('./helpers');
+const { getRounds, random } = require('./helpers');
 
 /**
  * Tournament object
  * @class
- * @extends {BasicObject}
  */
-class Tournament extends BasicObject {
+class Tournament {
   /**
    * Creates a Tournament object that manages the rounds and matches
    * @param {String} id - Unique identifier
    * @param {String[]} entrants - List of entrants
    * @param {Boolean} shuffle - Should the round order be shuffled
    */
-  constructor(id, entrants, shuffle=true) {
-    super();
+  constructor(id, entrants, win=1, draw=0, loss=0, shuffle=true) {
     this.id = id;
 
     this.entrants = entrants.sort();
 
+    this.scores = {};
+    this.entrants.map((ent) => {this.scores[ent] = 0});
+    this.win = win;
+    this.draw = draw;
+    this.loss = loss;
+
     this.matchSet = this.createMatchSet();
 
     this.roundCount = getRounds(entrants.length);
-    this.rounds = {};
+    this.rounds = [];
     this.createRounds();
     if (shuffle) this.shuffleRounds();
   }
@@ -88,6 +92,26 @@ class Tournament extends BasicObject {
   }
 
   /**
+   * 
+   */
+  updateScores() {
+    this.entrants.map((ent) => {this.scores[ent] = 0});
+    this.rounds.map((round) => {
+      round.matches.map((match) => {
+        let loser = match.entA === match.winner ? match.entB : match.entA;
+        if (!match.draw && match.winner !== null ){
+          this.scores[match.winner] += this.win;
+          this.scores[loser] += this.loss;
+        }
+        if (match.draw) {
+          this.scores[match.entA] += this.draw;
+          this.scores[match.entB] += this.draw
+        }
+      });
+    });
+  }
+
+  /**
    * Returns the list of rounds.
    * @returns {Round[]}
    */
@@ -104,20 +128,29 @@ class Tournament extends BasicObject {
     if (i > 0 && i <= this.roundCount) return this.rounds[i];
     return null;
   }
+
+  /**
+   * Attempts to find a given match
+   * @param {String} matchId - ID for match
+   * @returns {Match|null}
+   */
+  getMatch(matchId) {
+    const matches = this.rounds.filter((round) => round.getMatch(matchId) !== null);
+    if (matches.length >= 1) return matches[0].getMatch(matchId);
+    return null;
+  }
 }
 
 /**
  * A round in the tournament
  * @class
- * @extends BasicObject
  */
-class Round extends BasicObject {
+class Round {
   /**
    * Create a new round for the tournament
    * @param {String} id - Unique identifier
    */
   constructor(id) {
-    super();
     this.id = id;
     this.matches = [];
   }
@@ -153,9 +186,8 @@ class Round extends BasicObject {
 /**
  * A match in the tournament between two entrants
  * @class
- * @extends BasicObject
  */
-class Match extends BasicObject {
+class Match {
   /**
    * Creates a new match within the tournament
    * @param {String} id - Unique identifier
@@ -163,8 +195,8 @@ class Match extends BasicObject {
    * @param {String} entrantB - Second entrant
    */
   constructor(id, entrantA, entrantB) {
-    super();
     this.id = id;
+    console.log(this.id);
 
     this.entA = entrantA;
     this.entB = entrantB;
@@ -173,17 +205,6 @@ class Match extends BasicObject {
 
     this.winner = null;
     this.draw = false;
-
-    this.on('markwin', (e) => { 
-      if (e.detail.matchId === this.id) {
-        this.markWinner(e.detail.entrant);
-      }
-    });
-    this.on('toggledraw', (e) => {
-      if (e.detail.matchId === this.id) {
-        this.toggleDraw();
-      }
-    });
   }
 
   /**

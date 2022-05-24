@@ -31,6 +31,7 @@ function buildLayout() {
           rounds.innerHTML += `<li>${match.entA} vs ${match.entB}</li>`;
 
           const winSelect = document.createElement('select');
+          winSelect.id = match.id;
           const blankOpt = document.createElement('option');
           blankOpt.value = 'null';
           const entAOpt = document.createElement('option');
@@ -42,10 +43,6 @@ function buildLayout() {
           winSelect.appendChild(blankOpt);
           winSelect.appendChild(entAOpt);
           winSelect.appendChild(entBOpt);
-          winSelect.onclick = function () {
-            console.log("HELLO")
-          }
-          console.log({winSelect})
           rounds.appendChild(winSelect);
         });
         rounds.innerHTML += `</ol>`;
@@ -61,6 +58,7 @@ function buildLayout() {
           rounds.innerHTML += `<li>${match.entA} vs ${match.entB}</li>`;
 
           const winSelect = document.createElement('select');
+          winSelect.id = match.id;
           const blankOpt = document.createElement('option');
           blankOpt.value = 'null';
           const entAOpt = document.createElement('option');
@@ -94,5 +92,7 @@ document.addEventListener('input', (e) => {
 
   if (!e.target[0].hidden) e.target[0].hidden = true;
 
-  console.log(e.target.value);
+  tournament.getMatch(e.target.id).markWinner(e.target.value);
+  tournament.updateScores();
+  console.log(tournament.scores);
 });
