@@ -65,9 +65,13 @@ function makeTournament(entrants) {
       const entBOpt = document.createElement('option');
       entBOpt.value = match.entB;
       entBOpt.textContent = match.entB;
+      const drawOpt = document.createElement('option');
+      drawOpt.value = 'draw';
+      drawOpt.textContent = `It's a draw!`;
       winSelect.appendChild(blankOpt);
       winSelect.appendChild(entAOpt);
       winSelect.appendChild(entBOpt);
+      winSelect.appendChild(drawOpt);
       rounds.appendChild(winSelect);
     });
     rounds.innerHTML += `</ol>`;
@@ -101,7 +105,13 @@ document.addEventListener('input', (e) => {
 
   if (!e.target[0].hidden) e.target[0].hidden = true;
 
-  tournament.getMatch(e.target.id).markWinner(e.target.value);
+  if (e.target.value !== 'draw') {
+    const match = tournament.getMatch(e.target.id);
+    if (match.draw) match.toggleDraw();
+    match.markWinner(e.target.value);
+  } else {
+    tournament.getMatch(e.target.id).toggleDraw();
+  }
   tournament.updateScores();
   makeScoreSheet()
 });
