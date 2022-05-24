@@ -17,12 +17,16 @@
       <label for="Points on Lose">Points on Lose</label>
       <input type="number" name="Points on Lose" id="losepoints" value=0>
       <button name="Create Tournament" id="create">Create Tournament</button>
+      <label for="Description">Description</label>
+      <textarea name="Description" id="editdescription" cols="30" rows="10" placeholder="A description of the tournament and its rules..."></textarea>
     </section>
     <section id="tournament" hidden>
       <h2>Tournament</h2>
       <button name="Edit Tournament" id="edit">Edit Tournament</button>
       <h3>Scores</h3>
       <table id="scores"></table>
+      <h3>Description</h3>
+      <p id="showdescription"></p>
       <div id="rounds"></div>
     </section>
   </body>

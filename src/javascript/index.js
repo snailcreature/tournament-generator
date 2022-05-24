@@ -12,9 +12,11 @@ const configSection = document.querySelector('#config');
 const winPoints = document.querySelector('#winpoints');
 const drawPoints = document.querySelector('#drawpoints');
 const losePoints = document.querySelector('#losepoints');
+const editDesc = document.querySelector('#editdescription')
 const tournamentSection = document.querySelector('#tournament');
 const rounds = document.querySelector('#rounds');
 const scores = document.querySelector('#scores');
+const showDesc = document.querySelector('#showdescription');
 const entrantList = document.querySelector('#entrant-list');
 const create = document.querySelector('#create');
 const edit = document.querySelector('#edit');
@@ -92,6 +94,8 @@ function buildLayout() {
       makeTournament(entrants);
     }
     
+    showDesc.textContent = editDesc.value + `\nWin: ${winPoints.value}, Draw: ${drawPoints.value}, Loss: ${losePoints.value}`;
+
     tournamentSection.hidden = false;
     configSection.hidden = true;
   }
