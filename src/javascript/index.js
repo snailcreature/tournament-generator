@@ -19,7 +19,7 @@ const edit = document.querySelector('#edit');
 let tournament = undefined;
 
 function sortByScore() {
-  return tournament.entrants.sort((a, b) => {
+  return tournament.entrants.sort().sort((a, b) => {
     return tournament.scores[a] > tournament.scores[b] ? -1 : 1;
     return 0;
   })
@@ -81,7 +81,7 @@ function makeTournament(entrants) {
 
 function buildLayout() {
   const entrants = entrantList.value.split('\n');
-  if (entrants.length >= 0 && entrants.every(ent => ent !== '')) {
+  if (entrants.length >= 0 && entrants.every(ent => ent !== '' && ent !== 'draw')) {
     if (tournament === undefined || tournament.entrants.length !== entrants.length) {
       makeTournament(entrants);
     } else if (!entrants.every(ent => tournament.entrants.includes(ent))) {
