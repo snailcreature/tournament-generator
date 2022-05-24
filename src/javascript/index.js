@@ -18,9 +18,16 @@ const edit = document.querySelector('#edit');
 
 let tournament = undefined;
 
+function sortByScore() {
+  return tournament.entrants.sort((a, b) => {
+    return tournament.scores[a] > tournament.scores[b] ? -1 : 1;
+    return 0;
+  })
+}
+
 function makeScoreSheet() {
   scores.innerHTML = '';
-  tournament.entrants.map((ent) => {
+  sortByScore().map((ent) => {
     const row = document.createElement('tr');
     const nameCell = document.createElement('td');
     nameCell.textContent = ent;

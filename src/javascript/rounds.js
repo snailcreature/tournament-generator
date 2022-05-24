@@ -197,7 +197,6 @@ class Match {
    */
   constructor(id, entrantA, entrantB) {
     this.id = id;
-    console.log(this.id);
 
     this.entA = entrantA;
     this.entB = entrantB;
