@@ -10,7 +10,7 @@ const { getRounds, random } = require('./helpers');
  * Tournament object
  * @class
  */
-class Tournament {
+class Tournament extends EventTarget {
   /**
    * Creates a Tournament object that manages the rounds and matches
    * @param {String} id - Unique identifier
@@ -18,6 +18,7 @@ class Tournament {
    * @param {Boolean} shuffle - Should the round order be shuffled
    */
   constructor(id, entrants, win=1, draw=0, loss=0, shuffle=true) {
+    super();
     this.id = id;
 
     this.entrants = entrants.sort();
