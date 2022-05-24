@@ -2,27 +2,45 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tournament Generator</title>
   </head>
   <body>
     <h1>Tournament Generator</h1>
     <section id="config">
       <h2>Tournament Config</h2>
-      <label for="Entrant List">Entrant List</label>
-      <textarea name="Entrant List" id="entrant-list" cols="30" rows="10" placeholder="Enter list of entrants, each on a new line..."></textarea>
-      <label for="Points on Win">Points on Win</label>
-      <input type="number" name="Points on Win" id="winpoints" value=1>
-      <label for="Points on Draw">Points on Draw</label>
-      <input type="number" name="Points on Draw" id="drawpoints" value=0>
-      <label for="Points on Lose">Points on Lose</label>
-      <input type="number" name="Points on Lose" id="losepoints" value=0>
-      <button name="Create Tournament" id="create">Create Tournament</button>
-      <label for="Description">Description</label>
-      <textarea name="Description" id="editdescription" cols="30" rows="10" placeholder="A description of the tournament and its rules..."></textarea>
+      <div class="config-options">
+        <label for="entrant-list">Entrant List</label>
+        <textarea name="Entrant List" id="entrant-list" class="border" cols="30" rows="10" placeholder="Enter list of entrants, each on a new line..."></textarea>
+      </div>
+      
+      <div class="config-options">
+        <ul id="score-options">
+          <li class="score-option">
+            <label for="winpoints">Points on Win</label>
+            <input type="number" name="Points on Win" id="winpoints" class="border" value=1 min="1">
+          </li>
+          <li class="score-option">
+            <label for="drawpoints">Points on Draw</label>
+            <input type="number" name="Points on Draw" id="drawpoints" class="border" value=0 min="0">
+          </li>
+          <li class="score-option">
+            <label for="losepoints">Points on Lose</label>
+            <input type="number" name="Points on Lose" id="losepoints" class="border" value=0 min="0">
+          </li>
+        </ul>
+      </div>
+      
+      <div class="config-options">
+        <label for="editdescription">Description</label>
+        <textarea name="Description" id="editdescription" class="border" cols="30" rows="10" placeholder="A description of the tournament and its rules..."></textarea>
+      </div>
+
+      <button name="Create Tournament" id="create" class="border">Create Tournament</button>
     </section>
     <section id="tournament" hidden>
       <h2>Tournament</h2>
-      <button name="Edit Tournament" id="edit">Edit Tournament</button>
+      <button name="Edit Tournament" id="edit" class="border">Edit Tournament</button>
       <h3>Scores</h3>
       <table id="scores"></table>
       <h3>Description</h3>

@@ -1,3 +1,73 @@
+:root {
+  --main-bg-color: #F4F4f4;
+  --main-text-color: #191923;
+}
+
 * {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: var(--main-text-color);
+  background-color: var(--main-bg-color);
+}
+
+body {
+  text-align: center;
+  display: grid;
+}
+
+.border {
+  border-width: 0.2em;
+  border-color: var(--main-text-color);
+  border-radius: 0.2em;
+}
+
+button.border:hover, .border:focus {
+  border-style: solid;
+  border-width: 0.3em;
+  transition: border-style 1s, border-width .5s;
+}
+
+textarea.border {
+  border-style: dotted;
+}
+
+input.border {
+  border-style: dashed;
+}
+
+select.border {
+  border-style: double;
+}
+
+.config-options {
+  display: grid;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.score-option {
+  display: grid;
+}
+
+textarea {
+  max-width: 90vw;
+  margin: 0 auto;
+  resize: none;
+}
+
+input {
+  text-align: center;
+  max-width: 10vw;
+  margin: 0 auto;
+}
+
+#scores {
+  margin: 0 auto;
+  max-height: 7em;
+  scroll-behavior: smooth;
+}
+
+.name-cell {
+  text-align: right;
 }

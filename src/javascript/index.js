@@ -35,6 +35,7 @@ function makeScoreSheet() {
     const row = document.createElement('tr');
     const nameCell = document.createElement('td');
     nameCell.textContent = ent;
+    nameCell.classList = "name-cell";
     const scoreCell = document.createElement('td');
     scoreCell.textContent = tournament.scores[ent];
     scoreCell.addEventListener('scoresupdated', () => {
@@ -61,6 +62,7 @@ function makeTournament(entrants) {
 
       const winSelect = document.createElement('select');
       winSelect.id = match.id;
+      winSelect.classList = "border";
       const blankOpt = document.createElement('option');
       blankOpt.value = 'null';
       const entAOpt = document.createElement('option');
