@@ -12,12 +12,18 @@
 body {
   text-align: center;
   display: grid;
+  overflow-x: hidden;
 }
 
 .border {
   border-width: 0.2em;
   border-color: var(--main-text-color);
   border-radius: 0.2em;
+}
+
+button {
+  height: 3em;
+  width: 10em;
 }
 
 button.border:hover, .border:focus {
@@ -32,6 +38,15 @@ textarea.border {
 
 input.border {
   border-style: dashed;
+}
+
+#tournament {
+  margin-bottom: 50vh;
+}
+
+select {
+  width: 10vw;
+  overflow: hidden;
 }
 
 select.border {
@@ -66,15 +81,61 @@ input {
 
 button {
   margin-top: 1em;
-  
 }
 
-#scores {
+#scores-container {
   margin: 0 auto;
-  max-height: 7em;
   scroll-behavior: smooth;
+  max-width: fit-content;
+  max-height: 10em;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-width: 0.2em;
+  border-radius: 0.2em;
+  border-style: groove;
+  border-color: var(--main-text-color);
+}
+
+td {
+  max-width: 40vw;
+  overflow: hidden;
+}
+
+#showdescription {
+  margin: 0 auto;
+  margin-left: 1em;
+  max-width: 80vw;
+  max-height: 10em;
+  word-wrap: break-word;
+  overflow-y: scroll;
 }
 
 .name-cell {
   text-align: right;
+}
+
+@media screen and (min-width: 50em) {
+  #info-sect {
+    margin-left: 25vw;
+    display: flex;
+  }
+
+  #scores {
+    margin: 0 auto;
+  }
+
+  #info-sect > div {
+    min-width: 20vw;
+    max-width: 30vw;
+  }
+
+  #showdescription {
+    text-align: left;
+  }
+
+  td {
+    max-width: 20vw;
+    overflow: hidden;
+  }
+  
 }
