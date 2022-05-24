@@ -8,11 +8,20 @@
     <h1>Tournament Generator</h1>
     <section id="config">
       <h2>Tournament Config</h2>
+      <label for="Entrant List">Entrant List</label>
       <textarea name="Entrant List" id="entrant-list" cols="30" rows="10" placeholder="Enter list of entrants, each on a new line..."></textarea>
+      <label for="Points on Win">Points on Win</label>
+      <input type="number" name="Points on Win" id="winpoints" value=1>
+      <label for="Points on Draw">Points on Draw</label>
+      <input type="number" name="Points on Draw" id="drawpoints" value=0>
+      <label for="Points on Lose">Points on Lose</label>
+      <input type="number" name="Points on Lose" id="losepoints" value=0>
       <button name="Create Tournament" id="create">Create Tournament</button>
     </section>
     <section id="tournament" hidden>
+      <h2>Tournament</h2>
       <button name="Edit Tournament" id="edit">Edit Tournament</button>
+      <h3>Scores</h3>
       <table id="scores"></table>
       <div id="rounds"></div>
     </section>

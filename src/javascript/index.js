@@ -9,6 +9,9 @@ import '../css/index.css';
 const { Tournament } = require('./rounds');
 
 const configSection = document.querySelector('#config');
+const winPoints = document.querySelector('#winpoints');
+const drawPoints = document.querySelector('#drawpoints');
+const losePoints = document.querySelector('#losepoints');
 const tournamentSection = document.querySelector('#tournament');
 const rounds = document.querySelector('#rounds');
 const scores = document.querySelector('#scores');
@@ -21,7 +24,6 @@ let tournament = undefined;
 function sortByScore() {
   return tournament.entrants.sort().sort((a, b) => {
     return tournament.scores[a] > tournament.scores[b] ? -1 : 1;
-    return 0;
   })
 }
 
@@ -43,9 +45,9 @@ function makeScoreSheet() {
 }
 
 function makeTournament(entrants) {
-  tournament = new Tournament("tournament", entrants);
+  tournament = new Tournament("tournament", entrants, parseInt(winPoints.value), parseInt(drawPoints.value), parseInt(losePoints.value));
   const roundList = tournament.getRounds();
-  rounds.innerHTML = '<h2>Tournament</h2>';
+  rounds.innerHTML = '';
 
   makeScoreSheet();
 
@@ -83,6 +85,8 @@ function buildLayout() {
   const entrants = entrantList.value.split('\n');
   if (entrants.length >= 0 && entrants.every(ent => ent !== '' && ent !== 'draw')) {
     if (tournament === undefined || tournament.entrants.length !== entrants.length) {
+      makeTournament(entrants);
+    } else if (tournament.win !== parseInt(winPoints.value) || tournament.draw !== parseInt(drawPoints.value) || tournament.loss !== parseInt(losePoints.value)) {
       makeTournament(entrants);
     } else if (!entrants.every(ent => tournament.entrants.includes(ent))) {
       makeTournament(entrants);
