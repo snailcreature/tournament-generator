@@ -2,6 +2,7 @@ const path = require('path');
 const env = require('dotenv').config();
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -17,6 +18,12 @@ module.exports = {
       filename: "css/[name].[contenthash].css",
     }
     ),
+    new CopyPlugin({
+      patterns: [
+        './src/manifest.json',
+        './src/sw.js',
+      ],
+    }),
   ],
   output: {
     filename: 'javascript/[name].[contenthash].js',

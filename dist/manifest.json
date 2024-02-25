@@ -1,0 +1,55 @@
+{
+  "name": "Tournament Generator",
+  "short_name": "Tournament",
+  "version": "1.0.0",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFDE59",
+  "description": "Generates pairings for players.",
+  "scope": "/",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "src": "./assets/500x500.png",
+      "type": "image/png",
+      "sizes": "500x500"
+  },
+  {
+      "purpose": "any maskable",
+      "src": "./assets/128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+  }
+  ],
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode":"prefetch",
+      "resources": {
+        "files": [
+          "/index.html",
+          "/css/*.css",
+          "/javascript/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    }
+  ],
+  "serviceworker": {
+    "scope": "./",
+    "src": "./sw.js",
+    "use_cache": true
+  },
+  "orientation": "portrait"
+}
