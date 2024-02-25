@@ -41,6 +41,14 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(png|ico)$/,
+        type: 'asset/resource',
+        loader: 'file-loader',
+        options: {
+          name: 'assets/[name].[ext]',
+        },
       }
     ]
   },

@@ -36,7 +36,7 @@ eval("const { EventEmitter } = __webpack_require__(/*! events */ \"./node_module
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/index.css */ \"./src/css/index.css\");\n/**\n * Main runtime process\n * @file\n * @requires ./rounds\n */\n\n\n\nconst { Tournament } = __webpack_require__(/*! ./rounds */ \"./src/javascript/rounds.js\");\n\nconst configSection = document.querySelector('#config');\nconst winPoints = document.querySelector('#winpoints');\nconst drawPoints = document.querySelector('#drawpoints');\nconst losePoints = document.querySelector('#losepoints');\nconst editDesc = document.querySelector('#editdescription')\nconst tournamentSection = document.querySelector('#tournament');\nconst rounds = document.querySelector('#rounds');\nconst scores = document.querySelector('#scores');\nconst showDesc = document.querySelector('#showdescription');\nconst entrantList = document.querySelector('#entrant-list');\nconst create = document.querySelector('#create');\nconst edit = document.querySelector('#edit');\n\nlet tournament = undefined;\n\nfunction sortByScore() {\n  return tournament.entrants.sort().sort((a, b) => {\n    return tournament.scores[a] > tournament.scores[b] ? -1 : 1;\n  })\n}\n\nfunction makeScoreSheet() {\n  scores.innerHTML = '';\n  sortByScore().map((ent) => {\n    const row = document.createElement('tr');\n    const nameCell = document.createElement('td');\n    nameCell.textContent = ent;\n    nameCell.classList = \"name-cell\";\n    const scoreCell = document.createElement('td');\n    scoreCell.textContent = tournament.scores[ent];\n    scoreCell.addEventListener('scoresupdated', () => {\n      scoreCell.textContent = tournament.scores[ent];\n    });\n    row.appendChild(nameCell);\n    row.appendChild(scoreCell);\n    scores.appendChild(row);\n  });\n}\n\nfunction makeTournament(entrants) {\n  tournament = new Tournament(\"tournament\", entrants, parseInt(winPoints.value), parseInt(drawPoints.value), parseInt(losePoints.value));\n  const roundList = tournament.getRounds();\n  rounds.innerHTML = '';\n\n  makeScoreSheet();\n\n  for (let i = 1; i <= tournament.roundCount; i++) {\n    rounds.innerHTML += `<h3>Round ${i}</h3>`;\n    rounds.innerHTML += `<ol>`;\n    roundList[i].getMatches().forEach(match => {\n      rounds.innerHTML += `<li>${match.entA} vs ${match.entB}</li>`;\n\n      const winSelect = document.createElement('select');\n      winSelect.id = match.id;\n      winSelect.classList = \"border\";\n      const blankOpt = document.createElement('option');\n      blankOpt.value = 'null';\n      const entAOpt = document.createElement('option');\n      entAOpt.value = match.entA;\n      entAOpt.textContent = match.entA;\n      const entBOpt = document.createElement('option');\n      entBOpt.value = match.entB;\n      entBOpt.textContent = match.entB;\n      const drawOpt = document.createElement('option');\n      drawOpt.value = 'draw';\n      drawOpt.textContent = `It's a draw!`;\n      winSelect.appendChild(blankOpt);\n      winSelect.appendChild(entAOpt);\n      winSelect.appendChild(entBOpt);\n      winSelect.appendChild(drawOpt);\n      rounds.appendChild(winSelect);\n    });\n    rounds.innerHTML += `</ol>`;\n  }\n\n}\n\nfunction buildLayout() {\n  const entrants = entrantList.value.split('\\n');\n  if (entrants.length >= 0 && entrants.every(ent => ent !== '' && ent !== 'draw')) {\n    if (tournament === undefined || tournament.entrants.length !== entrants.length) {\n      makeTournament(entrants);\n    } else if (tournament.win !== parseInt(winPoints.value) || tournament.draw !== parseInt(drawPoints.value) || tournament.loss !== parseInt(losePoints.value)) {\n      makeTournament(entrants);\n    } else if (!entrants.every(ent => tournament.entrants.includes(ent))) {\n      makeTournament(entrants);\n    }\n    \n    showDesc.textContent = editDesc.value + `\\nWin: ${winPoints.value}, Draw: ${drawPoints.value}, Loss: ${losePoints.value}`;\n\n    tournamentSection.hidden = false;\n    configSection.hidden = true;\n  }\n}\n\ncreate.addEventListener('click', buildLayout);\n\nedit.addEventListener('click', () => {\n  configSection.hidden = false;\n  tournamentSection.hidden = true;\n});\n\ndocument.addEventListener('input', (e) => {\n  if (e.target.localName !== 'select' || e.target.tagName !== 'SELECT') return;\n\n  if (!e.target[0].hidden) e.target[0].hidden = true;\n\n  if (e.target.value !== 'draw') {\n    const match = tournament.getMatch(e.target.id);\n    if (match.draw) match.toggleDraw();\n    match.markWinner(e.target.value);\n  } else {\n    tournament.getMatch(e.target.id).toggleDraw();\n  }\n  tournament.updateScores();\n  makeScoreSheet()\n});\n\n//# sourceURL=webpack://tournament-generator/./src/javascript/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/index.css */ \"./src/css/index.css\");\n/* harmony import */ var _assets_16x16_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../assets/16x16.png */ \"./src/assets/16x16.png\");\n/* harmony import */ var _assets_32x32_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../assets/32x32.png */ \"./src/assets/32x32.png\");\n/* harmony import */ var _assets_128x128_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../assets/128x128.png */ \"./src/assets/128x128.png\");\n/* harmony import */ var _assets_256x256_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../assets/256x256.png */ \"./src/assets/256x256.png\");\n/* harmony import */ var _assets_500x500_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../assets/500x500.png */ \"./src/assets/500x500.png\");\n/* harmony import */ var _assets_favicon_ico__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../assets/favicon.ico */ \"./src/assets/favicon.ico\");\n/**\n * Main runtime process\n * @file\n * @requires ./rounds\n */\n\n\n\n\n\n\n\n\n\nconst { Tournament } = __webpack_require__(/*! ./rounds */ \"./src/javascript/rounds.js\");\n\nconst configSection = document.querySelector('#config');\nconst winPoints = document.querySelector('#winpoints');\nconst drawPoints = document.querySelector('#drawpoints');\nconst losePoints = document.querySelector('#losepoints');\nconst editDesc = document.querySelector('#editdescription')\nconst tournamentSection = document.querySelector('#tournament');\nconst rounds = document.querySelector('#rounds');\nconst scores = document.querySelector('#scores');\nconst showDesc = document.querySelector('#showdescription');\nconst entrantList = document.querySelector('#entrant-list');\nconst create = document.querySelector('#create');\nconst edit = document.querySelector('#edit');\n\nlet tournament = undefined;\n\nfunction sortByScore() {\n  return tournament.entrants.sort().sort((a, b) => {\n    return tournament.scores[a] > tournament.scores[b] ? -1 : 1;\n  })\n}\n\nfunction makeScoreSheet() {\n  scores.innerHTML = '';\n  sortByScore().map((ent) => {\n    const row = document.createElement('tr');\n    const nameCell = document.createElement('td');\n    nameCell.textContent = ent;\n    nameCell.classList = \"name-cell\";\n    const scoreCell = document.createElement('td');\n    scoreCell.textContent = tournament.scores[ent];\n    scoreCell.addEventListener('scoresupdated', () => {\n      scoreCell.textContent = tournament.scores[ent];\n    });\n    row.appendChild(nameCell);\n    row.appendChild(scoreCell);\n    scores.appendChild(row);\n  });\n}\n\nfunction makeTournament(entrants) {\n  tournament = new Tournament(\"tournament\", entrants, parseInt(winPoints.value), parseInt(drawPoints.value), parseInt(losePoints.value));\n  const roundList = tournament.getRounds();\n  rounds.innerHTML = '';\n\n  makeScoreSheet();\n\n  for (let i = 1; i <= tournament.roundCount; i++) {\n    rounds.innerHTML += `<h3>Round ${i}</h3>`;\n    rounds.innerHTML += `<ol>`;\n    roundList[i].getMatches().forEach(match => {\n      rounds.innerHTML += `<li>${match.entA} vs ${match.entB}</li>`;\n\n      const winSelect = document.createElement('select');\n      winSelect.id = match.id;\n      winSelect.classList = \"border\";\n      const blankOpt = document.createElement('option');\n      blankOpt.value = 'null';\n      const entAOpt = document.createElement('option');\n      entAOpt.value = match.entA;\n      entAOpt.textContent = match.entA;\n      const entBOpt = document.createElement('option');\n      entBOpt.value = match.entB;\n      entBOpt.textContent = match.entB;\n      const drawOpt = document.createElement('option');\n      drawOpt.value = 'draw';\n      drawOpt.textContent = `It's a draw!`;\n      winSelect.appendChild(blankOpt);\n      winSelect.appendChild(entAOpt);\n      winSelect.appendChild(entBOpt);\n      winSelect.appendChild(drawOpt);\n      rounds.appendChild(winSelect);\n    });\n    rounds.innerHTML += `</ol>`;\n  }\n\n}\n\nfunction buildLayout() {\n  const entrants = entrantList.value.split('\\n');\n  if (entrants.length >= 0 && entrants.every(ent => ent !== '' && ent !== 'draw')) {\n    if (tournament === undefined || tournament.entrants.length !== entrants.length) {\n      makeTournament(entrants);\n    } else if (tournament.win !== parseInt(winPoints.value) || tournament.draw !== parseInt(drawPoints.value) || tournament.loss !== parseInt(losePoints.value)) {\n      makeTournament(entrants);\n    } else if (!entrants.every(ent => tournament.entrants.includes(ent))) {\n      makeTournament(entrants);\n    }\n    \n    showDesc.textContent = editDesc.value + `\\nWin: ${winPoints.value}, Draw: ${drawPoints.value}, Loss: ${losePoints.value}`;\n\n    tournamentSection.hidden = false;\n    configSection.hidden = true;\n  }\n}\n\ncreate.addEventListener('click', buildLayout);\n\nedit.addEventListener('click', () => {\n  configSection.hidden = false;\n  tournamentSection.hidden = true;\n});\n\ndocument.addEventListener('input', (e) => {\n  if (e.target.localName !== 'select' || e.target.tagName !== 'SELECT') return;\n\n  if (!e.target[0].hidden) e.target[0].hidden = true;\n\n  if (e.target.value !== 'draw') {\n    const match = tournament.getMatch(e.target.id);\n    if (match.draw) match.toggleDraw();\n    match.markWinner(e.target.value);\n  } else {\n    tournament.getMatch(e.target.id).toggleDraw();\n  }\n  tournament.updateScores();\n  makeScoreSheet()\n});\n\n//# sourceURL=webpack://tournament-generator/./src/javascript/index.js?");
 
 /***/ }),
 
@@ -57,6 +57,72 @@ eval("/**\n * @file - Contains handlers for Tournaments, Rounds, and Matches\n *
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 eval("const Set = __webpack_require__(/*! set */ \"./node_modules/set/set.js\");\n\nlet jsonMixin  = {\n  /**\n   * Converts set with unparsed JSON elements into an array\n   * @returns {Array}\n   */\n  toArray() {\n    const arr = [];\n    try {\n      this.get().forEach(element => {\n        arr.push(JSON.parse(element));\n      });\n      return arr;\n    } catch (error) {\n      console.log(error);\n    }\n  },\n\n  /**\n   * Filters the contents of the set by a given predicate\n   * @param {Function} predicate \n   * @returns {Array}\n   */\n  filter(predicate) {\n    try {\n      const arr = this.toArray();\n      return arr.filter(predicate);\n    } catch (error) {\n      const arr = this.get();\n      return arr.filter(predicate);\n    }\n  },\n\n  /**\n   * Removes elements based on a predicate\n   * @param {Function} predicate - Predicate to assess whether the element should be kept\n   */\n  trim(predicate) {\n    const out = new Set(this.filter(predicate));\n    return out;\n  }\n}\n\nObject.assign(Set.prototype, jsonMixin);\n\nmodule.exports = {\n  Set,\n}\n\n//# sourceURL=webpack://tournament-generator/./src/javascript/set.js?");
+
+/***/ }),
+
+/***/ "./src/assets/128x128.png":
+/*!********************************!*\
+  !*** ./src/assets/128x128.png ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"63199c3af1fe0262fe13.png\";\n\n//# sourceURL=webpack://tournament-generator/./src/assets/128x128.png?");
+
+/***/ }),
+
+/***/ "./src/assets/16x16.png":
+/*!******************************!*\
+  !*** ./src/assets/16x16.png ***!
+  \******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"cec3cb2dac9a15e0b52f.png\";\n\n//# sourceURL=webpack://tournament-generator/./src/assets/16x16.png?");
+
+/***/ }),
+
+/***/ "./src/assets/256x256.png":
+/*!********************************!*\
+  !*** ./src/assets/256x256.png ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"e8dc298af4ab56cbe45a.png\";\n\n//# sourceURL=webpack://tournament-generator/./src/assets/256x256.png?");
+
+/***/ }),
+
+/***/ "./src/assets/32x32.png":
+/*!******************************!*\
+  !*** ./src/assets/32x32.png ***!
+  \******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"826b3759b3f82df44081.png\";\n\n//# sourceURL=webpack://tournament-generator/./src/assets/32x32.png?");
+
+/***/ }),
+
+/***/ "./src/assets/500x500.png":
+/*!********************************!*\
+  !*** ./src/assets/500x500.png ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"35e141f9a27ce1b72469.png\";\n\n//# sourceURL=webpack://tournament-generator/./src/assets/500x500.png?");
+
+/***/ }),
+
+/***/ "./src/assets/favicon.ico":
+/*!********************************!*\
+  !*** ./src/assets/favicon.ico ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"3665a6f88ce09405e3ba.ico\";\n\n//# sourceURL=webpack://tournament-generator/./src/assets/favicon.ico?");
 
 /***/ })
 

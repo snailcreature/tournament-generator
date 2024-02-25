@@ -5,6 +5,12 @@
  */
 
 import '../css/index.css';
+import img16 from '../assets/16x16.png';
+import img32 from '../assets/32x32.png';
+import img128 from '../assets/128x128.png';
+import img256 from '../assets/256x256.png';
+import img500 from '../assets/500x500.png';
+import imgIco from '../assets/favicon.ico';
 
 const { Tournament } = require('./rounds');
 
